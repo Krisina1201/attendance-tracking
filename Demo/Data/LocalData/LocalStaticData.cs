@@ -18,7 +18,7 @@ namespace Demo.Data.LocalData
             new GroupLocalEntity{ Id = 3, Name = "ИП1-23" },
         };
 
-        public static IEnumerable<UserLocalEnity> users => new List<UserLocalEnity>
+        public static List<UserLocalEnity> users => new List<UserLocalEnity>
         {
             new UserLocalEnity{Guid=Guid.NewGuid(), FIO = "RandomFio", GroupID = 1 },
             new UserLocalEnity{Guid=Guid.NewGuid(), FIO = "RandomFio1", GroupID = 2 },
