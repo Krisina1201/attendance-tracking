@@ -10,7 +10,7 @@ namespace Demo.Data.LocalData
 {
     public static class LocalStaticData
     {
-        public static IEnumerable<GroupLocalEntity> groups => new List<GroupLocalEntity>
+        public static List<GroupLocalEntity> groups => new List<GroupLocalEntity>
         
         {
             new GroupLocalEntity{ Id = 1, Name = "ИП1-21" },

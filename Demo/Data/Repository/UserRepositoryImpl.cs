@@ -10,7 +10,7 @@ namespace Demo.Data.Repository
 {
     public class UserRepositoryImpl
     {
-        public IEnumerable<UserLocalEnity> GetAllUsers() => LocalStaticData.users;
+        public List<UserLocalEnity> GetAllUsers() => LocalStaticData.users;
 
         public bool RemoveUserByGuid(Guid userGuid)
         {
@@ -31,7 +31,7 @@ namespace Demo.Data.Repository
             return userLocal;
         }
 
-        public UserLocalEnity? UpdateUserByGuid(UserLocalEnity userUpdateLocalEnity) {
+        public UserLocalEnity? UpdateUser(UserLocalEnity userUpdateLocalEnity) {
             UserLocalEnity? userLocal = LocalStaticData
                     .users
                     .Where(x => x.Guid == userUpdateLocalEnity.Guid).FirstOrDefault();
