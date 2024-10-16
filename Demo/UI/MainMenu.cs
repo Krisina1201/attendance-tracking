@@ -14,7 +14,23 @@ namespace Demo.UI
 
         public MainMenuUI(UserUseCase userUseCase) { 
         _userConsoleUI = new UserConsoleUI(userUseCase);
-        _userConsoleUI.DisplayAllUsers();
+            DisplayMenu();
+            
+        }
+
+        private void DisplayMenu() {
+            while (true)
+            {
+                switch (Console.ReadLine())
+                {
+                    case "1": _userConsoleUI.DisplayAllUsers(); break;
+                    case "2": _userConsoleUI.RemoveUserByGuid(Guid.Parse(Console.ReadLine())); break;
+
+                    default: DisplayMenu();
+                        break;
+                }
+
+            }
         }
         
     }

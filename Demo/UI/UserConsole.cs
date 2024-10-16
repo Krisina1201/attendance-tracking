@@ -14,10 +14,16 @@ namespace Demo.UI
             _userUseCase = userUseCase;
         }
 
+        public void RemoveUserByGuid(Guid guidUser) {
+
+            string output = _userUseCase.RemoveUserByGuid(guidUser) ? "Пользователь удален" : "Пользователь не удален";
+            Console.WriteLine(output);
+        }
+
         public void DisplayAllUsers()
         {
             StringBuilder userOutput = new StringBuilder();
-            foreach (var user in _userUseCase.GetAllUsers)
+            foreach (var user in _userUseCase.GetAllUsers())
             {
                 userOutput.AppendLine($"{user.Guid}\t{user.FIO}\t{user.Group.Name}");
             }

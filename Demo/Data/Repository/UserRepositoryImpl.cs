@@ -10,21 +10,24 @@ namespace Demo.Data.Repository
 {
     public class UserRepositoryImpl
     {
-        public List<UserLocalEnity> GetAllUsers() => LocalStaticData.users;
+        public UserRepositoryImpl() {
+
+            GetAllUsers = LocalStaticData.users;
+        }
+        public List<UserLocalEnity> GetAllUsers
+        { get; set; }
 
         public bool RemoveUserByGuid(Guid userGuid)
         {
-            UserLocalEnity? userLocal = LocalStaticData
-                .users
+            UserLocalEnity? userLocal = GetAllUsers
                 .Where(x => x.Guid == userGuid).FirstOrDefault();
             if (userLocal == null) return false;
 
-            return LocalStaticData.users.Remove(userLocal);
+            return GetAllUsers.Remove(userLocal);
         }
 
         public UserLocalEnity? GetUserByGuid(Guid userGuid) {
-            UserLocalEnity? userLocal = LocalStaticData
-                    .users
+            UserLocalEnity? userLocal = GetAllUsers
                     .Where(x => x.Guid == userGuid).FirstOrDefault();
             if (userLocal == null) return null;
 
@@ -32,8 +35,7 @@ namespace Demo.Data.Repository
         }
 
         public UserLocalEnity? UpdateUser(UserLocalEnity userUpdateLocalEnity) {
-            UserLocalEnity? userLocal = LocalStaticData
-                    .users
+            UserLocalEnity? userLocal = GetAllUsers
                     .Where(x => x.Guid == userUpdateLocalEnity.Guid).FirstOrDefault();
             if (userLocal == null) return null;
             userLocal.FIO = userUpdateLocalEnity.FIO;

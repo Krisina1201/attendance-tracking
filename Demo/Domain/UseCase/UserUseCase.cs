@@ -21,7 +21,7 @@ namespace Demo.Domain.UseCase
 
       public List<Group> GetAllGroups() => _repositoryGroupImpl.GetAllGroups()
             .Select(it => new Group { Id  = it.Id, Name = it.Name}).ToList();
-      public List<User> GetAllUsers => _repositoryUserImpl.GetAllUsers()
+      public List<User> GetAllUsers() => _repositoryUserImpl.GetAllUsers
             .Join(_repositoryGroupImpl.GetAllGroups(),
             user => user.GroupID,
             group => group.Id,
@@ -31,6 +31,9 @@ namespace Demo.Domain.UseCase
                 Group = new Group {Id = group.Id, Name = group.Name } }
           ).ToList();
 
+        public bool RemoveUserByGuid(Guid userGuid) {
+           return _repositoryUserImpl.RemoveUserByGuid(userGuid);
+        }
         public User UpdateUser(User user) {
             UserLocalEnity userLocalEnity = new UserLocalEnity { FIO = user.FIO, GroupID = user.Group.Id, Guid = user.Guid };
             UserLocalEnity? result = _repositoryUserImpl.UpdateUser(userLocalEnity);
