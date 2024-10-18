@@ -5,6 +5,6 @@ using Demo.UI;
 
 GroupRepositoryImpl groupRepositoryImpl = new GroupRepositoryImpl();
 UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl();
-UserUseCase userUseCase = new UserUseCase(userRepositoryImpl, groupRepositoryImpl);
+UserUseCase UserUseCase = new UserUseCase(userRepositoryImpl, groupRepositoryImpl);
 
-MainMenuUI mainMenuUI = new MainMenuUI(userUseCase);
+MainMenuUI mainMenuUI = new MainMenuUI(UserUseCase);

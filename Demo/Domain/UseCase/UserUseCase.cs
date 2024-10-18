@@ -34,6 +34,7 @@ namespace Demo.Domain.UseCase
         public bool RemoveUserByGuid(Guid userGuid) {
            return _repositoryUserImpl.RemoveUserByGuid(userGuid);
         }
+
         public User UpdateUser(User user) {
             UserLocalEnity userLocalEnity = new UserLocalEnity { FIO = user.FIO, GroupID = user.Group.Id, Guid = user.Guid };
             UserLocalEnity? result = _repositoryUserImpl.UpdateUser(userLocalEnity);

@@ -1,7 +1,10 @@
-﻿using Demo.Domain.UseCase;
+﻿using Demo.domain.Models;
+using Demo.Domain.UseCase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +31,24 @@ namespace Demo.UI
                 userOutput.AppendLine($"{user.Guid}\t{user.FIO}\t{user.Group.Name}");
             }
             Console.WriteLine(userOutput);
+        }
+
+        public void UpdateUser(User user)
+        {
+            try
+            {
+                User updatedUser = _userUseCase.UpdateUser(user);
+                Console.WriteLine($"Пользователь обновлен: {updatedUser.FIO}, Группа: {updatedUser.Group.Name}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        public void GetUserByGuid(Guid userGuid) {
+            var output = _userUseCase.GetUserByGuid(userGuid);
+            Console.WriteLine(output);
         }
     }
 }
