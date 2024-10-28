@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.domain.Models
+namespace Demo.Domain.ModesDAO
 {
-    public class Group
+    public class GroupDAO
     {
-        public required int Id { get; set; }
+        public int Id { get; set;  }
         public required string Name { get; set; }
+        public IEnumerable<UserDAO> Users { get; set; }
     }
 }

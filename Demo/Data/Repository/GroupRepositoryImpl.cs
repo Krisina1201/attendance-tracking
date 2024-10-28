@@ -10,24 +10,27 @@ namespace Demo.Data.Repository
 {
     public class GroupRepositoryImpl
     {
-       public List<GroupLocalEntity> GetAllGroups() => LocalStaticData.groups;
-
+        public GroupRepositoryImpl()
+        {
+            GetAllGroups = LocalStaticData.groups;
+        }
         public List<GroupLocalEntity> GetAllGroups
         { get; set; }
+
 
         public bool RemoveGroupById(int id)
         {
             GroupLocalEntity? groupLocal = GetAllGroups
-                .Where(x => x.int == id).FirstOrDefault();
+                .Where(x => x.Id == id).FirstOrDefault();
             if (groupLocal == null) return false;
 
-            return GetAllGroup.Remove(groupLocal);
+            return GetAllGroups.Remove(groupLocal);
         }
 
         public GroupLocalEntity? GetGroupByGuid(int id)
         {
             GroupLocalEntity? groupLocal = GetAllGroups
-                    .Where(x => x.int == id).FirstOrDefault();
+                    .Where(x => x.Id == id).FirstOrDefault();
             if (groupLocal == null) return null;
 
             return groupLocal;
@@ -36,7 +39,7 @@ namespace Demo.Data.Repository
         public GroupLocalEntity? UpdateGroup(GroupLocalEntity groupUpdateLocalEnity)
         {
             GroupLocalEntity? groupLocal = GetAllGroups
-                    .Where(x => x.int == groupUpdateLocalEnity.id).FirstOrDefault();
+                    .Where(x => x.Id == groupUpdateLocalEnity.Id).FirstOrDefault();
             if (groupLocal == null) return null;
             groupLocal.Name = groupUpdateLocalEnity.Name;
             return groupLocal;

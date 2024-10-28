@@ -1,4 +1,6 @@
-﻿using Demo.Domain.UseCase;
+﻿using Demo.Domain.RemoteDatabase;
+using Demo.Domain.UseCase;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,37 +12,48 @@ namespace Demo.UI
     public class GroupConsoleUI
     {
         GroupUseCase _groupUseCase;
-        public UserConsoleUI(GroupUseCase groupUseCase)
+        public GroupConsoleUI(GroupUseCase groupUseCase)
         {
             _groupUseCase = groupUseCase;
         }
 
-        public UpdateGroups()
+        public void RemoveGroupById(int Id)
         {
-            string output = _groupUseCase.UpdateGroup("бла бла бла") ? "Группа обновлена" : "Группа не обновлена";
-            Console.WriteLine(output);
+            _groupUseCase.RemoveGroupById(Id);
         }
 
-        public void RemoveGroupByGuid(int id)
-        {
-
-            string output = _groupUseCase.RemoveGroupByGuid(id) ? "Группа удалена" : "Группа не удалена";
-            Console.WriteLine(output);
+        public void addGroup(string GtrtoupName) {
+            _groupUseCase.AddGroup(GtrtoupName);
         }
 
-        public void GetGroupById(int id)
-        {
-            Console.WriteLine(GetGroupById1(id));
-        }
 
         public void DisplayAllGroup()
         {
-            StringBuilder userOutput = new StringBuilder();
-            foreach (var user in _groupUseCase.GetAllGroup())
+            StringBuilder groupOutput = new StringBuilder();
+            foreach (var group in _groupUseCase.GetAllGroups())
             {
-                userOutput.AppendLine($"{group.Id}\t{group.Name}");
+                groupOutput.AppendLine($"{group.Id}\t{group.Name}");
             }
-            Console.WriteLine(userOutput);
+            Console.WriteLine(groupOutput);
+        }
+
+        public void UpdateGroup(Group group)
+        {
+            try
+            {
+                //Group updatedGroup = _groupUseCase.UpdateGroup(group);
+                //Console.WriteLine($"Группа обновленна: {updatedGroup.Name}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        public void GetGroupById(int Id)
+        {
+            //var output = _groupUseCase.GetGroupById(Id);
+            //Console.WriteLine($"Группа удалена по введенному айди: {output}");
         }
     }
 }

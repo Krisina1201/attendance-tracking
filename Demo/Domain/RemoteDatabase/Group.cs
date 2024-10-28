@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.domain.Models
+namespace Demo.Domain.RemoteDatabase
 {
-    public class GroupLocalEntity
+    public class Group
     {
-        public  int Id { get; set; }
+        public required int Id { get; set; }
         public required string Name { get; set; }
-
     }
 }

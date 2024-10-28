@@ -1,58 +1,121 @@
-﻿using Demo.Data.Repository;
+﻿using Demo.Data.LocalData;
+using Demo.Data.Repository;
 using Demo.domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Demo.Domain.RemoteDatabase;
+using System.Text.RegularExpressions;
+using Group = Demo.Domain.RemoteDatabase.Group;
 
 namespace Demo.Domain.UseCase
 {
     public class GroupUseCase
     {
-        private UserRepositoryImpl _repositoryUserImpl;
-        private GroupRepositoryImpl _repositoryGroupImpl;
+        private readonly IGroupRepository _repositoryGroupImpl;
 
-        public GroupUseCase(UserRepositoryImpl repositoryImpl, GroupRepositoryImpl repositoryGroupImpl)
+        public GroupUseCase(IGroupRepository repositoryGroupImpl)
         {
-            _repositoryUserImpl = repositoryImpl;
             _repositoryGroupImpl = repositoryGroupImpl;
         }
 
-        public List<Group> GetAllGroups() => _repositoryGroupImpl.GetAllGroups()
-              .Select(it => new Group { Id = it.Id, Name = it.Name }).ToList();
-
-        //public List<User> GetAllUsers() => _repositoryUserImpl.GetAllUsers
-        //      .Join(_repositoryGroupImpl.GetAllGroups(),
-        //      user => user.GroupID,
-        //      group => group.Id,
-        //      (user, group) =>
-        //      new User                                                                                 
-        //      {
-        //          FIO = user.FIO,
-        //          Guid = user.Guid,
-        //          Group = new Group { Id = group.Id, Name = group.Name }
-        //      }
-        //    ).ToList();
-
-        public bool RemoveGroupId(int id)
+        private void ValidateGroupName(string groupName)
         {
-            return _repositoryGroupImpl.RemoveGroupById(id);
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentException("Имя группы не может быть пустым.");
+            }
         }
 
-        public List<Group> GetGroupById1(int id)
+        private void ValidateGroupId(int GroupId)
         {
-            return _repositoryGroupImpl.GetGroupByid(id);
+            if (GroupId < 1)
+            {
+                throw new ArgumentException("Введите корректный ID группы.");
+            }
         }
 
-        public Group UpdateGroup(Group group)
+        private GroupLocalEntity ValidateGroupExistence(int groupId)
         {
-            GroupLocalEnity groupLocalEnity = new GroupLocalEnity { Id = group.Id, Name = group.name };
-            GroupLocalEnity? result = _repositoryGroupImpl.UpdateGroup(groupLocalEnity);
-            if (result == null) throw new Exception("");
-            Group? group = GetAllGroups().FirstOrDefault(it => it.Id == result!.GroupID);
-            if (group == null) throw new Exception("");
-            return new Group { Id = group.Id, Name = group.name };
+            var existingGroup = _repositoryGroupImpl.GetAllGroup()
+                .FirstOrDefault(g => g.Id == groupId);
+
+            if (existingGroup == null)
+            {
+                throw new ArgumentException("Группа не найдена.");
+            }
+
+            return existingGroup;
+        }
+
+
+        public List<Group> GetAllGroups()
+        {
+            return [.. _repositoryGroupImpl.GetAllGroup()
+                .Select(it => new Group { Id = it.Id, Name = it.Name })];
+        }
+
+
+
+        public void GetGroupById(int IdGroup)
+        {
+            List<Group> GetAllGroups()
+            {
+            return [.. _repositoryGroupImpl
+                    .GetAllGroup()
+                    .Select(
+                        it => new Group
+                        { Id = it.Id, Name = it.Name }
+                        )
+                ];
+            }
+            foreach (var group in GetAllGroups())
+            {
+                if (IdGroup == group.Id)
+                {
+                    string n = group.Id + group.Name;
+                }
+            }
+
+        }
+
+
+        public void AddGroup(string groupName)
+        {
+          
+
+            GroupLocalEntity newGroup = new GroupLocalEntity
+            {
+                Name = groupName
+            };
+
+            _repositoryGroupImpl.AddGroup(newGroup);
+        }
+
+        public void RemoveGroupById(int groupId)
+        {
+            ValidateGroupId(groupId);
+            var existingGroup = ValidateGroupExistence(groupId);
+            List<Group> _groups = GetAllGroups();
+
+            // Находим группу по ID и удаляем ее
+            var groupToRemove = _groups.FirstOrDefault(g => g.Id == existingGroup.Id);
+            if (groupToRemove != null)
+            {
+                _groups.Remove(groupToRemove);
+                _repositoryGroupImpl.RemoveGroupById(existingGroup.Id);
+            }
+            else
+            {
+                throw new ArgumentException("Группа не найдена.");
+            }
+        }
+
+
+        public bool UpdateGroup(int groupId, string newGroupName)
+        {
+            ValidateGroupName(newGroupName);
+            var existingGroup = ValidateGroupExistence(groupId);
+
+            existingGroup.Name = newGroupName;
+            return _repositoryGroupImpl.UpdateGroupById(existingGroup.Id, existingGroup);
         }
     }
 }

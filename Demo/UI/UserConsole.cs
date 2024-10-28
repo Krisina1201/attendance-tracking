@@ -1,4 +1,4 @@
-﻿using Demo.domain.Models;
+﻿using Demo.Domain.RemoteDatabase;
 using Demo.Domain.UseCase;
 using System;
 using System.Collections.Generic;
@@ -46,9 +46,10 @@ namespace Demo.UI
             }
         }
 
-        public void GetUserByGuid(Guid userGuid) {
+        public void GetUserByGuid(Guid userGuid)
+        {
             var output = _userUseCase.GetUserByGuid(userGuid);
-            Console.WriteLine(output);
+            Console.WriteLine($"Пользователь по введенному гюиду: {output}");
         }
     }
 }
