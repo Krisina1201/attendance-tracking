@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,12 +38,12 @@ namespace Demo.UI
             Console.WriteLine(groupOutput);
         }
 
-        public void UpdateGroup(Group group)
+        public void UpdateGroup(int Id, string nameGroup)
         {
             try
             {
-                //Group updatedGroup = _groupUseCase.UpdateGroup(group);
-                //Console.WriteLine($"Группа обновленна: {updatedGroup.Name}");
+                var updatedGroup = _groupUseCase.UpdateGroup(Id, nameGroup);
+                Console.WriteLine($"Группа обновленна успешно обновлена");
             }
             catch (Exception ex)
             {
@@ -50,10 +51,10 @@ namespace Demo.UI
             }
         }
 
-        public void GetGroupById(int Id)
+        public void GetGroupById(int Id, string nameGroup)
         {
-            //var output = _groupUseCase.GetGroupById(Id);
-            //Console.WriteLine($"Группа удалена по введенному айди: {output}");
+            _groupUseCase.GetGroupById(Id, nameGroup);
+            Console.WriteLine($"Группа удалена по введенному айди");
         }
     }
 }

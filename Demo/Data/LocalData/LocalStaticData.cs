@@ -27,5 +27,10 @@ namespace Demo.Data.LocalData
             new UserLocalEnity{Guid=Guid.Parse("efcc1473-c116-4244-b3f7-f2341a5c3003"), FIO = "RandomFio4", GroupID = 2 },
             new UserLocalEnity{Guid=Guid.Parse("60640fb3-ace2-4cad-81d5-a0a58bc2dbbd"), FIO = "RandomFio5", GroupID = 3 },
         };
+
+        public static List<PresenceLocalEntity> presences => new List<PresenceLocalEntity>
+        {
+
+        };
     }
 }

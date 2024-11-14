@@ -15,6 +15,10 @@ namespace Demo.Domain.UseCase
             _repositoryGroupImpl = repositoryGroupImpl;
         }
 
+        public UserUseCase(UserRepositoryImpl userRepositoryImpl, GroupRepositoryImpl groupRepositoryImpl)
+        {
+        }
+
         private void ValidateUserFIO(string fio)
         {
             if (string.IsNullOrWhiteSpace(fio))

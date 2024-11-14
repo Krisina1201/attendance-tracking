@@ -1,28 +1,32 @@
 ﻿
+using Demo.Data.RemoteData.RemoteDataBase;
 using Demo.Data.Repository;
-using Demo.Domain.RemoteDatabase;
 using Demo.Domain.UseCase;
 using Demo.UI;
 using Microsoft.Extensions.DependencyInjection;
 
-GroupRepositoryImpl groupRepositoryImpl = new GroupRepositoryImpl();
-UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl();
-//UserUseCase UserUseCase = new UserUseCase(userRepositoryImpl, groupRepositoryImpl);
-
-//MainMenuUI mainMenuUI = new MainMenuUI(UserUseCase);
+// Создаем экземпляр репозиториев
 
 IServiceCollection services = new ServiceCollection();
-services.AddDbContext<RemoteDatabaseContext>()
+
+services
+    .AddDbContext<RemoteDatabaseContext>()
     .AddSingleton<IGroupRepository, SQLGroupRepositoryImpl>()
     .AddSingleton<IUserRepository, SQLUserRepositoryImpl>()
-    .AddSingleton<GroupUseCase>()
-    .AddSingleton<GroupConsoleUI>()
+    .AddSingleton<IPresenceRepository, SQLPresenceRepositoryImpl>()
     .AddSingleton<UserUseCase>()
-    .AddSingleton<UserConsoleUI>()
-    .AddSingleton<MainMenuUI>()
-    ;
+    .AddSingleton<GroupUseCase>()
+    .AddSingleton<UseCaseGeneratePresence>()
+    .AddSingleton<GroupConsoleUI>()
+    .AddSingleton<PresenceConsoleUI>()
+    .AddSingleton<MainMenuUI>();
+
+
+
 
 var serviceProvider = services.BuildServiceProvider();
-var mainMenu = serviceProvider.GetService<MainMenuUI>();
+// Создаем пользовательский интерфейс
+MainMenuUI mainMenuUI = serviceProvider.GetService<MainMenuUI>();
 
-mainMenu.DisplayMenu();
+// Выводим главное меню
+mainMenuUI!.DisplayMenu();

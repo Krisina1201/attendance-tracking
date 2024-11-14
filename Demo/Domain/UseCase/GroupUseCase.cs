@@ -54,7 +54,7 @@ namespace Demo.Domain.UseCase
 
 
 
-        public void GetGroupById(int IdGroup)
+        public void GetGroupById(int IdGroup, string nameGroup)
         {
             List<Group> GetAllGroups()
             {
@@ -73,7 +73,6 @@ namespace Demo.Domain.UseCase
                     string n = group.Id + group.Name;
                 }
             }
-
         }
 
 
@@ -94,8 +93,6 @@ namespace Demo.Domain.UseCase
             ValidateGroupId(groupId);
             var existingGroup = ValidateGroupExistence(groupId);
             List<Group> _groups = GetAllGroups();
-
-            // Находим группу по ID и удаляем ее
             var groupToRemove = _groups.FirstOrDefault(g => g.Id == existingGroup.Id);
             if (groupToRemove != null)
             {

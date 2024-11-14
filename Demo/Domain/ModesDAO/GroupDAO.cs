@@ -9,7 +9,7 @@ namespace Demo.Domain.ModesDAO
     public class GroupDAO
     {
         public int Id { get; set;  }
-        public required string Name { get; set; }
+        public string Name { get; set; }
         public IEnumerable<UserDAO> Users { get; set; }
     }
 }

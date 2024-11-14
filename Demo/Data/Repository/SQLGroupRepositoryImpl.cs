@@ -1,6 +1,7 @@
-﻿using Demo.domain.Models;
+﻿using Demo.Data.RemoteData;
+using Demo.Data.RemoteData.RemoteDataBase;
+using Demo.domain.Models;
 using Demo.Domain.ModesDAO;
-using Demo.Domain.RemoteDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Demo.Data.Repository
         public bool AddGroupDao(GroupDAO newGroup)
         {
             if (_remoteDatabaseContext.Groups.Any(g => g.Id == newGroup.Id))
-                return false; // Возвращает false, если группа с таким ID уже существует
+                return false;
 
             var daoGroup = newGroup;
             _remoteDatabaseContext.Groups.Add(daoGroup);

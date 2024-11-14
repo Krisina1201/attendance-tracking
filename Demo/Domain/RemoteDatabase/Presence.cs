@@ -10,8 +10,9 @@ namespace Demo.Domain.RemoteDatabase
     {
 
         public required User User { get; set; }
+        public required int GroupId { get; set; }
         public bool IsAttedance { get; set; } = true;
-        public required DateOnly Date { get; set; }
+        public required DateTime Date { get; set; }
 
         public required int LessonNumber { get; set; }
     }

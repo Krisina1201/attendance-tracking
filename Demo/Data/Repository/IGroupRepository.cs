@@ -9,12 +9,12 @@ namespace Demo.Data.Repository
 {
 
     public interface IGroupRepository
-        {
+    {
         List<GroupLocalEntity> GetAllGroup();
         bool RemoveGroupById(int groupID);
         bool UpdateGroupById(int groupID, GroupLocalEntity updatedGroup);
         GroupLocalEntity GetGroupById(int groupID);
         bool AddGroup(GroupLocalEntity newGroup);
     }
-    }
+}
 

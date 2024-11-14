@@ -10,7 +10,8 @@ namespace Demo.Domain.ModesDAO
     {
         public required string FIO { get; set; }
         public Guid Guid { get; set; }
-        public required int GroupID { get; set; }
-        public GroupDAO Group { get; set; }
+        public int GroupID { get; set; }
+        public virtual GroupDAO Group { get; set; }
+        public virtual IEnumerable<PresenceDAO> Presences { get; set; }
     }
 }
